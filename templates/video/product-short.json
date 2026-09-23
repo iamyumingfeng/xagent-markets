@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "id": "product-short",
+  "category": "video",
+  "version": "1.0.0",
+  "name": { "zh": "产品短视频", "en": "Product Short" },
+  "description": { "zh": "电商产品旋转展示短视频，首尾帧可控。", "en": "E-commerce product turntable short video with controllable first/last frame." },
+  "categoryKey": "short-video",
+  "tags": ["product", "ecommerce", "turntable"],
+  "cover": "covers/product-short.jpg",
+  "author": { "id": "official", "name": "XAgent Official" },
+  "stats": { "downloads": 0, "likes": 0 },
+  "minAppVersion": "1.2.0",
+  "publishedAt": "2026-09-20T00:00:00Z",
+  "payload": {
+    "mode": "text_to_video",
+    "model": { "platform": "kling", "modelId": "kling-v1", "modelName": "可灵 1.0" },
+    "prompt": "studio product turntable shot, smooth 360 rotation, soft lighting, white backdrop",
+    "durationSeconds": 5,
+    "aspectRatio": "9:16",
+    "resolution": "1080p",
+    "watermark": false,
+    "n": 1
+  }
+}

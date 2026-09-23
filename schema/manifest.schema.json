@@ -1,0 +1,158 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://xagent.market/schema/manifest.schema.json",
+  "title": "XAgent Market Template Manifest",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion", "id", "category", "version", "name", "description",
+    "categoryKey", "tags", "cover", "author", "stats", "minAppVersion",
+    "publishedAt", "payload"
+  ],
+  "properties": {
+    "schemaVersion": { "type": "integer", "const": 1 },
+    "id": { "type": "string", "pattern": "^[a-z0-9][a-z0-9-]{1,63}$" },
+    "category": { "type": "string", "enum": ["image", "video", "workflow", "agent", "plugin"] },
+    "version": { "type": "string", "pattern": "^\\d+\\.\\d+\\.\\d+$" },
+    "name": { "$ref": "#/definitions/localizedString" },
+    "description": { "$ref": "#/definitions/localizedString" },
+    "categoryKey": { "type": "string", "pattern": "^[a-z0-9-]{1,40}$" },
+    "tags": { "type": "array", "items": { "type": "string" }, "maxItems": 12 },
+    "cover": { "type": "string", "minLength": 1 },
+    "author": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "name"],
+      "properties": { "id": { "type": "string" }, "name": { "type": "string" } }
+    },
+    "stats": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["downloads", "likes"],
+      "properties": {
+        "downloads": { "type": "integer", "minimum": 0 },
+        "likes": { "type": "integer", "minimum": 0 }
+      }
+    },
+    "minAppVersion": { "type": "string", "pattern": "^\\d+\\.\\d+\\.\\d+$" },
+    "publishedAt": { "type": "string", "format": "date-time" },
+    "payload": { "type": "object" }
+  },
+  "definitions": {
+    "localizedString": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["zh", "en"],
+      "properties": { "zh": { "type": "string" }, "en": { "type": "string" } }
+    },
+    "modelRef": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["platform", "modelId", "modelName"],
+      "properties": {
+        "platform": { "type": "string", "enum": ["bailian", "zhipu", "moonshot", "kling", "volcengine", "deepseek", "ollama", "minimax", "custom"] },
+        "modelId": { "type": "string" },
+        "modelName": { "type": "string" }
+      }
+    },
+    "imagePayload": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["mode", "prompt"],
+      "properties": {
+        "mode": { "type": "string", "enum": ["text_to_image", "image_to_image", "image_edit", "multi_reference"] },
+        "model": { "$ref": "#/definitions/modelRef" },
+        "prompt": { "type": "string" },
+        "aspectRatio": { "type": "string" },
+        "quality": { "type": "string" },
+        "resolution": { "type": "string" },
+        "watermark": { "type": "boolean" },
+        "n": { "type": "integer", "minimum": 1, "maximum": 9 },
+        "referenceImages": { "type": "array", "items": { "type": "string" }, "maxItems": 4 }
+      }
+    },
+    "videoPayload": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["mode", "prompt"],
+      "properties": {
+        "mode": { "type": "string", "enum": ["text_to_video", "first_last_frame", "multi_reference"] },
+        "model": { "$ref": "#/definitions/modelRef" },
+        "prompt": { "type": "string" },
+        "durationSeconds": { "type": "integer", "minimum": 1 },
+        "aspectRatio": { "type": "string" },
+        "resolution": { "type": "string", "enum": ["480p", "720p", "1080p", "4K"] },
+        "watermark": { "type": "boolean" },
+        "n": { "type": "integer", "minimum": 1, "maximum": 4 },
+        "firstFrameImage": { "type": "string" },
+        "lastFrameImage": { "type": "string" },
+        "referenceImages": { "type": "array", "items": { "type": "string" }, "maxItems": 4 }
+      }
+    },
+    "workflowPayload": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["definitionUrl"],
+      "properties": {
+        "definitionUrl": { "type": "string", "minLength": 1 },
+        "nodeCount": { "type": "integer", "minimum": 0 }
+      }
+    },
+    "agentPayload": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["contextFiles"],
+      "properties": {
+        "recommended": { "$ref": "#/definitions/modelRef" },
+        "contextFiles": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["agents"],
+          "properties": {
+            "agents": { "type": "string" },
+            "rules": { "type": "string" },
+            "style": { "type": "string" },
+            "tools": { "type": "string" }
+          }
+        },
+        "recommendedSkills": {
+          "type": "array",
+          "maxItems": 16,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["slug", "name"],
+            "properties": { "slug": { "type": "string" }, "name": { "type": "string" } }
+          }
+        },
+        "requiredMcpServers": {
+          "type": "array",
+          "maxItems": 16,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["name", "hint"],
+            "properties": { "name": { "type": "string" }, "hint": { "type": "string" } }
+          }
+        }
+      }
+    },
+    "pluginPayload": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["packageUrl", "sha256"],
+      "properties": {
+        "packageUrl": { "type": "string", "minLength": 1 },
+        "sha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+        "entrypoint": { "type": "string" }
+      }
+    }
+  },
+  "allOf": [
+    { "if": { "properties": { "category": { "const": "image" } } }, "then": { "properties": { "payload": { "$ref": "#/definitions/imagePayload" } } } },
+    { "if": { "properties": { "category": { "const": "video" } } }, "then": { "properties": { "payload": { "$ref": "#/definitions/videoPayload" } } } },
+    { "if": { "properties": { "category": { "const": "workflow" } } }, "then": { "properties": { "payload": { "$ref": "#/definitions/workflowPayload" } } } },
+    { "if": { "properties": { "category": { "const": "agent" } } }, "then": { "properties": { "payload": { "$ref": "#/definitions/agentPayload" } } } },
+    { "if": { "properties": { "category": { "const": "plugin" } } }, "then": { "properties": { "payload": { "$ref": "#/definitions/pluginPayload" } } } }
+  ]
+}

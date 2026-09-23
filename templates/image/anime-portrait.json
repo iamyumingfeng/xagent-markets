@@ -1,0 +1,24 @@
+{
+  "schemaVersion": 1,
+  "id": "anime-portrait",
+  "category": "image",
+  "version": "1.0.0",
+  "name": { "zh": "动漫人像", "en": "Anime Portrait" },
+  "description": { "zh": "干净线稿风格的动漫人像，适合头像与立绘。", "en": "Clean line-art anime portrait for avatars and key visuals." },
+  "categoryKey": "portrait",
+  "tags": ["anime", "portrait", "illustration"],
+  "cover": "covers/anime-portrait.jpg",
+  "author": { "id": "official", "name": "XAgent Official" },
+  "stats": { "downloads": 0, "likes": 0 },
+  "minAppVersion": "1.2.0",
+  "publishedAt": "2026-09-20T00:00:00Z",
+  "payload": {
+    "mode": "text_to_image",
+    "model": { "platform": "bailian", "modelId": "wanx2.1-t2i-turbo", "modelName": "通义万相 2.1 Turbo" },
+    "prompt": "anime style portrait, clean line art, soft shading, detailed eyes, plain background",
+    "aspectRatio": "3:4",
+    "quality": "high",
+    "watermark": false,
+    "n": 1
+  }
+}

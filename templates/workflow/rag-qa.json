@@ -1,0 +1,19 @@
+{
+  "schemaVersion": 1,
+  "id": "rag-qa",
+  "category": "workflow",
+  "version": "1.0.0",
+  "name": { "zh": "知识库问答", "en": "RAG Q&A" },
+  "description": { "zh": "检索增强问答工作流：知识库检索 → 组织上下文 → 生成回答。", "en": "Retrieval-augmented Q&A workflow: retrieve, compose context, answer." },
+  "categoryKey": "rag",
+  "tags": ["rag", "qa", "knowledge-base"],
+  "cover": "covers/rag-qa.jpg",
+  "author": { "id": "official", "name": "XAgent Official" },
+  "stats": { "downloads": 0, "likes": 0 },
+  "minAppVersion": "1.2.0",
+  "publishedAt": "2026-09-20T00:00:00Z",
+  "payload": {
+    "definitionUrl": "workflows/rag-qa.definition.json",
+    "nodeCount": 4
+  }
+}

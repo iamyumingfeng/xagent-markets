@@ -1,0 +1,60 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://xagent.market/schema/index.schema.json",
+  "title": "XAgent Market Category Index",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["indexVersion", "schemaVersion", "category", "generatedAt", "categories", "templates"],
+  "properties": {
+    "indexVersion": { "type": "integer", "minimum": 1 },
+    "schemaVersion": { "type": "integer", "const": 1 },
+    "category": { "type": "string", "enum": ["image", "video", "workflow", "agent", "plugin"] },
+    "generatedAt": { "type": "string", "format": "date-time" },
+    "categories": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["key", "name"],
+        "properties": {
+          "key": { "type": "string" },
+          "name": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["zh", "en"],
+            "properties": { "zh": { "type": "string" }, "en": { "type": "string" } }
+          }
+        }
+      }
+    },
+    "templates": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "version", "name", "cover", "tags", "categoryKey", "stats", "minAppVersion", "detailUrl"],
+        "properties": {
+          "id": { "type": "string" },
+          "version": { "type": "string" },
+          "name": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["zh", "en"],
+            "properties": { "zh": { "type": "string" }, "en": { "type": "string" } }
+          },
+          "cover": { "type": "string" },
+          "tags": { "type": "array", "items": { "type": "string" } },
+          "categoryKey": { "type": "string" },
+          "stats": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["downloads", "likes"],
+            "properties": { "downloads": { "type": "integer" }, "likes": { "type": "integer" } }
+          },
+          "minAppVersion": { "type": "string" },
+          "detailUrl": { "type": "string" }
+        }
+      }
+    }
+  }
+}
